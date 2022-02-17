@@ -48,20 +48,11 @@ function validate()
 {
     $invalidFields = [];
 
-    if (empty($_POST["email"])) {
-        array_push($invalidFields, "email");
-    }
-    if (empty($_POST["street"])) {
-        array_push($invalidFields, "street");
-    }
-    if (empty($_POST["streetnumber"])) {
-        array_push($invalidFields, "streetnumber");
-    }
-    if (empty($_POST["city"])) {
-        array_push($invalidFields, "city");
-    }
-    if (empty($_POST["zipcode"])) {
-        array_push($invalidFields, "zipcode");
+    // check for empty fields
+    foreach ($_POST as $fieldKey => $fieldValue) {
+        if (empty($fieldValue)) {
+            array_push($invalidFields, $fieldKey);
+        }
     }
     if (empty($_POST["products"])) {
         array_push($invalidFields, "products");
@@ -80,22 +71,40 @@ $validationErrors = [
     "products" => "",
 ];
 
+// function sanitizeData()
+// {
+//     // trim whitespace from strings in $_POST
+//     foreach ($_POST as &$data) {
+//         if (gettype($data) === "string") {
+//             $data = trim($data);
+//             $data = htmlspecialchars($data);
+//         }
+//     }
+//     unset($data);
+// }
+
+function reportErrors($invalidFields)
+{
+    global $validationErrors;
+
+    foreach ($invalidFields as $field) {
+        $validationErrors[$field] = "field required";
+        if ($field === "products") {
+            $validationErrors[$field] = "min. 1 selection required";
+        }
+    }
+}
+
 function handleForm()
 {
     // TODO: form related tasks (step 1)
 
+    // sanitizeData();
     // Validation (step 2)
     $invalidFields = validate();
-    pre_r($invalidFields);
-    global $validationErrors;
     if (!empty($invalidFields)) {
         // TODO: handle errors
-        foreach ($invalidFields as $field) {
-            $validationErrors[$field] = "field required";
-            if ($field === "products") {
-                $validationErrors[$field] = "min. 1 selection required";
-            }
-        }
+        reportErrors($invalidFields);
     } else {
         // TODO: handle successful submission
     }
