@@ -15,8 +15,7 @@
 <body>
     <div class="container">
         <h1>Place your order</h1>
-        <?php // Navigation for when you need it 
-        ?>
+
         <?php /*
     <nav>
         <ul class="nav">
@@ -30,13 +29,17 @@
     </nav>
     */ ?>
 
+        <!-- FORM CONFIRMATION MESSAGE -->
         <?php if ($orderConfirmationMsg) : ?>
             <div class="alert alert-success" role="alert">
                 <?= $orderConfirmationMsg ?>
             </div>
         <?php endif ?>
 
+        <!-- FORM -->
         <form method="post">
+
+            <!-- EMAIL INPUT -->
             <div class="form-row">
                 <div class="form-group col-md-6">
                     <label for="email">E-mail:</label>
@@ -50,33 +53,48 @@
                 <legend>Address</legend>
 
                 <div class="form-row">
+
+                    <!-- STREET INPUT -->
                     <div class="form-group col-md-6">
                         <label for="street">Street:</label>
                         <input type="text" name="street" id="street" class="form-control" value="<?= $street ?>" required>
                         <p class="red"><?= $validationErrors["street"] ?></p>
                     </div>
+
+                    <!-- STREET NUMBER INPUT -->
                     <div class="form-group col-md-6">
                         <label for="streetnumber">Street number:</label>
                         <input type="text" id="streetnumber" name="streetnumber" class="form-control" value="<?= $streetnumber ?>" required>
                         <p class="red"><?= $validationErrors["streetnumber"] ?></p>
                     </div>
+
                 </div>
+
                 <div class="form-row">
+
+                    <!-- CITY INPUT -->
                     <div class="form-group col-md-6">
                         <label for="city">City:</label>
                         <input type="text" id="city" name="city" class="form-control" value="<?= $city ?>" required>
                         <p class="red"><?= $validationErrors["city"] ?></p>
                     </div>
+
+                    <!-- ZIPCODE INPUT -->
                     <div class="form-group col-md-6">
                         <label for="zipcode">Zipcode</label>
                         <input type="text" id="zipcode" name="zipcode" class="form-control" value="<?= $zipcode ?>" required>
                         <p class="red"><?= $validationErrors["zipcode"] ?></p>
                     </div>
+
                 </div>
+
             </fieldset>
 
             <fieldset>
+
                 <legend>Products</legend>
+
+                <!-- PRODUCT SELECTION -->
                 <?php foreach ($products as $i => $product) : ?>
                     <label>
                         <input type="checkbox" value="1" name="products[<?= $i ?>]" <?= isset($_POST["products"][$i]) ? "checked" : "" ?> />
@@ -85,12 +103,16 @@
                     <br />
                 <?php endforeach; ?>
                 <p class="red"><?= $validationErrors["products"] ?></p>
+
             </fieldset>
 
+            <!-- SUBMIT BUTTON -->
             <button type="submit" class="btn btn-primary">Order!</button>
+
         </form>
 
         <footer>You already ordered <strong>&euro; <?php echo $totalValue ?></strong> in food and drinks.</footer>
+
     </div>
 
     <style>
@@ -103,6 +125,7 @@
             font-weight: bold;
         }
     </style>
+
 </body>
 
 </html>
