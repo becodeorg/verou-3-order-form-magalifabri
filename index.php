@@ -13,7 +13,7 @@ error_reporting(E_ALL);
 // We are going to use session variables so we need to enable sessions
 session_start();
 
-function pre_r($str)
+function pre_r(array $str)
 {
     echo "<pre>";
     var_dump($str);
@@ -46,29 +46,53 @@ $totalValue = 0;
 
 function validate()
 {
+    $invalidFields = [];
+
+    if (empty($_POST["email"])) {
+        array_push($invalidFields, "email");
+    }
+    if (empty($_POST["street"])) {
+        array_push($invalidFields, "street");
+    }
+    if (empty($_POST["streetnumber"])) {
+        array_push($invalidFields, "streetnumber");
+    }
+    if (empty($_POST["city"])) {
+        array_push($invalidFields, "city");
+    }
+    if (empty($_POST["zipcode"])) {
+        array_push($invalidFields, "zipcode");
+    }
+
     // This function will send a list of invalid fields back
-    return [];
+    return $invalidFields;
 }
+
+$validationErrors = [
+    "email" => "",
+    "street" => "",
+    "streetnumber" => "",
+    "city" => "",
+    "zipcode" => "",
+];
 
 function handleForm()
 {
-    whatIsHappening();
     // TODO: form related tasks (step 1)
 
     // Validation (step 2)
     $invalidFields = validate();
+    global $validationErrors;
     if (!empty($invalidFields)) {
         // TODO: handle errors
+        foreach ($invalidFields as $field) {
+            $validationErrors[$field] = "field required";
+        }
     } else {
         // TODO: handle successful submission
     }
 }
 
-// TODO: replace this if by an actual check
-// $formSubmitted = false;
-// if ($formSubmitted) {
-//     handleForm();
-// }
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     handleForm();
 }
