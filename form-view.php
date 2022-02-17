@@ -54,7 +54,7 @@
                     </label>
                     <br />
                 <?php endforeach; ?>
-                <p class="red"><?= $validationErrors["products"] ?></p>
+                <p class="error-msg products"><?= $validationErrors["products"] ?></p>
 
             </fieldset>
 
@@ -66,7 +66,7 @@
                 <div class="form-group col-md-6">
                     <label for="email">E-mail:</label>
                     <input type="email" id="email" name="email" class="form-control" value="<?= $_POST["email"] ?? "" ?>" required>
-                    <p class="red"><?= $validationErrors["email"] ?></p>
+                    <p class="error-msg email"><?= $validationErrors["email"] ?></p>
                 </div>
                 <div></div>
             </div>
@@ -80,14 +80,14 @@
                     <div class="form-group col-md-6">
                         <label for="street">Street:</label>
                         <input type="text" name="street" id="street" class="form-control" value="<?= $_POST["street"] ?? $_SESSION["street"] ?? "" ?>" required>
-                        <p class="red"><?= $validationErrors["street"] ?></p>
+                        <p class="error-msg street"><?= $validationErrors["street"] ?></p>
                     </div>
 
                     <!-- STREET NUMBER INPUT -->
                     <div class="form-group col-md-6">
                         <label for="streetnumber">Street number:</label>
                         <input type="text" id="streetnumber" name="streetnumber" class="form-control" value="<?= $_POST["streetnumber"] ?? $_SESSION["streetnumber"] ?? "" ?>" required>
-                        <p class="red"><?= $validationErrors["streetnumber"] ?></p>
+                        <p class="error-msg street-number"><?= $validationErrors["streetnumber"] ?></p>
                     </div>
 
                 </div>
@@ -98,14 +98,14 @@
                     <div class="form-group col-md-6">
                         <label for="city">City:</label>
                         <input type="text" id="city" name="city" class="form-control" value="<?= $_POST["city"] ?? $_SESSION["city"] ?? "" ?>" required>
-                        <p class="red"><?= $validationErrors["city"] ?></p>
+                        <p class="error-msg city"><?= $validationErrors["city"] ?></p>
                     </div>
 
                     <!-- ZIPCODE INPUT -->
                     <div class="form-group col-md-6">
                         <label for="zipcode">Zipcode</label>
                         <input type="number" min="0" max="999999" id="zipcode" name="zipcode" class="form-control" value="<?= $_POST["zipcode"] ?? $_SESSION["zipcode"] ?? "" ?>" required>
-                        <p class="red"><?= $validationErrors["zipcode"] ?></p>
+                        <p class="error-msg zipcode"><?= $validationErrors["zipcode"] ?></p>
                     </div>
 
                 </div>
@@ -126,7 +126,7 @@
             text-align: center;
         }
 
-        .red {
+        .error-msg {
             color: red;
             font-weight: bold;
         }
