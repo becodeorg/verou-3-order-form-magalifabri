@@ -116,6 +116,7 @@ function reportErrors($invalidFields)
 function validate()
 {
     $invalidFields = [];
+    $productOrdered = false;
 
     foreach ($_POST as $fieldKey => $fieldValue) {
         if (empty($fieldValue)) { // check for empty fields
@@ -131,14 +132,22 @@ function validate()
         }
     }
 
-    // check if min 1 product has been ordered
+    // check product selection
     foreach ($_POST["products"] as $index => $numberOrdered) {
         if ($numberOrdered) {
-            break;
+            if (
+                !is_numeric($numberOrdered)
+                || $numberOrdered < 0
+            ) {
+                array_push($invalidFields, ["products", "invalid input given"]);
+                return $invalidFields;
+            }
+            $productOrdered = true;
         }
-        if ($index + 1 === count($_POST["products"])) {
-            array_push($invalidFields, ["products", "min. 1 selection required"]);
-        }
+    }
+
+    if (!$productOrdered) {
+        array_push($invalidFields, ["products", "min. 1 selection required"]);
     }
 
     return $invalidFields;
