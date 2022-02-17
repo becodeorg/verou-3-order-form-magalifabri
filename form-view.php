@@ -57,14 +57,14 @@
                     <!-- STREET INPUT -->
                     <div class="form-group col-md-6">
                         <label for="street">Street:</label>
-                        <input type="text" name="street" id="street" class="form-control" value="<?= $_POST["street"] ?? "" ?>" required>
+                        <input type="text" name="street" id="street" class="form-control" value="<?= $_POST["street"] ?? $_SESSION["street"] ?? "" ?>" required>
                         <p class="red"><?= $validationErrors["street"] ?></p>
                     </div>
 
                     <!-- STREET NUMBER INPUT -->
                     <div class="form-group col-md-6">
                         <label for="streetnumber">Street number:</label>
-                        <input type="text" id="streetnumber" name="streetnumber" class="form-control" value="<?= $_POST["streetnumber"] ?? "" ?>" required>
+                        <input type="text" id="streetnumber" name="streetnumber" class="form-control" value="<?= $_POST["streetnumber"] ?? $_SESSION["streetnumber"] ?? "" ?>" required>
                         <p class="red"><?= $validationErrors["streetnumber"] ?></p>
                     </div>
 
@@ -75,14 +75,14 @@
                     <!-- CITY INPUT -->
                     <div class="form-group col-md-6">
                         <label for="city">City:</label>
-                        <input type="text" id="city" name="city" class="form-control" value="<?= $_POST["city"] ?? "" ?>" required>
+                        <input type="text" id="city" name="city" class="form-control" value="<?= $_POST["city"] ?? $_SESSION["city"] ?? "" ?>" required>
                         <p class="red"><?= $validationErrors["city"] ?></p>
                     </div>
 
                     <!-- ZIPCODE INPUT -->
                     <div class="form-group col-md-6">
                         <label for="zipcode">Zipcode</label>
-                        <input type="text" id="zipcode" name="zipcode" class="form-control" value="<?= $_POST["zipcode"] ?? "" ?>" required>
+                        <input type="text" id="zipcode" name="zipcode" class="form-control" value="<?= $_POST["zipcode"] ?? $_SESSION["zipcode"] ?? "" ?>" required>
                         <p class="red"><?= $validationErrors["zipcode"] ?></p>
                     </div>
 

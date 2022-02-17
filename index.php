@@ -47,21 +47,28 @@ function whatIsHappening()
     // echo '<h2>$_GET</h2>';
     // var_dump($_GET);
     // pre_r($_GET);
-    echo '<h2>$_POST</h2>';
-    // var_dump($_POST);
-    pre_r($_POST);
+    // echo '<h2>$_POST</h2>';
+    // pre_r($_POST);
     // echo '<h2>$_COOKIE</h2>';
     // var_dump($_COOKIE);
-    // echo '<h2>$_SESSION</h2>';
-    // var_dump($_SESSION);
+    echo '<h2>$_SESSION</h2>';
+    pre_r($_SESSION);
 }
 
 
 // FUNCTIONS
 
+function setSessionsVars()
+{
+    $_SESSION["street"] = $_POST["street"];
+    $_SESSION["streetnumber"] = $_POST["streetnumber"];
+    $_SESSION["city"] = $_POST["city"];
+    $_SESSION["zipcode"] = $_POST["zipcode"];
+}
+
+
 function getOrderList($products)
 {
-    // global $products;
     $orderedProductsStr = "";
 
     foreach ($_POST["products"] as $key => $value) {
@@ -131,6 +138,7 @@ function handleForm($products)
         reportErrors($invalidFields);
     } else {
         reportSuccess($products);
+        setSessionsVars();
     }
 }
 
