@@ -49,7 +49,7 @@
                 <!-- PRODUCT SELECTION -->
                 <?php foreach ($products as $i => $product) : ?>
                     <label>
-                        <input class="short-input" type="number" min="0" max="99" placeholder="#" name="products[<?= $i ?>]" value="<?= $_POST["products"][$i] ?? "" ?>" />
+                        <input class="product short-input" type="number" min="0" max="99" placeholder="#" name="products[<?= $i ?>]" value="<?= $_POST["products"][$i] ?? "" ?>" />
                         x <?= $product['name'] ?> - &euro; <?= number_format($product['price'], 2) ?>
                     </label>
                     <br />
@@ -87,7 +87,7 @@
                     <div class="form-group col-md-6">
                         <label for="streetnumber">Street number:</label>
                         <input type="text" id="streetnumber" name="streetnumber" class="form-control" value="<?= $_POST["streetnumber"] ?? $_SESSION["streetnumber"] ?? "" ?>" required>
-                        <p class="error-msg street-number"><?= $validationErrors["streetnumber"] ?></p>
+                        <p class="error-msg streetnumber"><?= $validationErrors["streetnumber"] ?></p>
                     </div>
 
                 </div>
