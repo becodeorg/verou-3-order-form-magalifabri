@@ -12,12 +12,19 @@ session_start();
 
 
 // VARIABLES
-
 $products = [
     ['name' => 'Your favourite drink', 'price' => 2.5],
     ['name' => 'Your least-favourite drink', 'price' => 0.5],
     ['name' => 'Mediocre drink', 'price' => 1.5],
 ];
+
+if ($_GET["food"] === "1") {
+    $products = [
+        ['name' => 'Your favourite food', 'price' => 2.5],
+        ['name' => 'Your least-favourite food', 'price' => 0.5],
+        ['name' => 'Mediocre food', 'price' => 1.5],
+    ];
+}
 
 $totalValue = 0;
 
@@ -147,5 +154,5 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     handleForm($products);
 }
 
-
+// pre_r($_GET);
 require 'form-view.php';
