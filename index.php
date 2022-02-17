@@ -13,12 +13,6 @@ session_start();
 
 // VARIABLES
 
-$email = $_POST["email"] ?? "";
-$street = $_POST["street"] ?? "";
-$streetnumber = $_POST["streetnumber"] ?? "";
-$city = $_POST["city"] ?? "";
-$zipcode = $_POST["zipcode"] ?? "";
-
 $products = [
     ['name' => 'Your favourite drink', 'price' => 2.5],
     ['name' => 'Your least-favourite drink', 'price' => 0.5],
@@ -65,9 +59,9 @@ function whatIsHappening()
 
 // FUNCTIONS
 
-function getOrderList()
+function getOrderList($products)
 {
-    global $products;
+    // global $products;
     $orderedProductsStr = "";
 
     foreach ($_POST["products"] as $key => $value) {
@@ -82,13 +76,13 @@ function getAddress()
     return "${_POST['street']} ${_POST['streetnumber']}, ${_POST['city']}";
 }
 
-function reportSuccess()
+function reportSuccess($products)
 {
     global $orderConfirmationMsg;
 
     $orderConfirmationMsg = "Thank you for ordering! <br><br>"
         . "Your order: <br>"
-        . getOrderList()
+        . getOrderList($products)
         . "<br> Delivery to " . getAddress() . " will follow shortly";
 }
 
@@ -130,19 +124,19 @@ function validate()
 }
 
 
-function handleForm()
+function handleForm($products)
 {
     $invalidFields = validate();
     if (!empty($invalidFields)) {
         reportErrors($invalidFields);
     } else {
-        reportSuccess();
+        reportSuccess($products);
     }
 }
 
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    handleForm();
+    handleForm($products);
 }
 
 
