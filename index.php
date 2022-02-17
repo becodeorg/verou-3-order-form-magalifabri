@@ -122,7 +122,7 @@ function validate()
         if (empty($fieldValue)) { // check for empty fields
             array_push($invalidFields, [$fieldKey, "field required"]);
         } else if ($fieldKey === "zipcode") {
-            if (!is_numeric($fieldValue)) { // check if zipcode contains only* numbers
+            if (!filter_var($fieldValue, FILTER_VALIDATE_INT, ["options" => ["min_range" => 0, "max_range" => 999999]])) {
                 array_push($invalidFields, [$fieldKey, "invalid zipcode"]);
             }
         } else if ($fieldKey === "email") { // check if email is valid

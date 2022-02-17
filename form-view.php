@@ -100,7 +100,7 @@
                     <!-- ZIPCODE INPUT -->
                     <div class="form-group col-md-6">
                         <label for="zipcode">Zipcode</label>
-                        <input type="text" id="zipcode" name="zipcode" class="form-control" value="<?= $_POST["zipcode"] ?? $_SESSION["zipcode"] ?? "" ?>" required>
+                        <input type="number" min="0" max="999999" id="zipcode" name="zipcode" class="form-control" value="<?= $_POST["zipcode"] ?? $_SESSION["zipcode"] ?? "" ?>" required>
                         <p class="red"><?= $validationErrors["zipcode"] ?></p>
                     </div>
 
