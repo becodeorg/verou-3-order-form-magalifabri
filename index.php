@@ -20,9 +20,9 @@ $products = [
 
 if ($_GET["food"] === "1") {
     $products = [
-        ['name' => 'Your favourite food', 'price' => 2.5],
-        ['name' => 'Your least-favourite food', 'price' => 0.5],
-        ['name' => 'Mediocre food', 'price' => 1.5],
+        ['name' => 'Your favourite food', 'price' => 4.5],
+        ['name' => 'Your least-favourite food', 'price' => 2.5],
+        ['name' => 'Mediocre food', 'price' => 3.5],
     ];
 }
 

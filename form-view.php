@@ -14,8 +14,6 @@
 
 <body>
     <div class="container">
-        <h1>Place your order</h1>
-
         <nav>
             <ul class="nav">
                 <li class="nav-item">
@@ -27,12 +25,30 @@
             </ul>
         </nav>
 
+        <h1>Place your order</h1>
+
         <!-- FORM CONFIRMATION MESSAGE -->
         <?php if ($orderConfirmationMsg) : ?>
             <div class="alert alert-success" role="alert">
                 <?= $orderConfirmationMsg ?>
             </div>
         <?php endif ?>
+
+        <fieldset>
+
+            <legend>Products</legend>
+
+            <!-- PRODUCT SELECTION -->
+            <?php foreach ($products as $i => $product) : ?>
+                <label>
+                    <input type="checkbox" value="1" name="products[<?= $i ?>]" <?= isset($_POST["products"][$i]) ? "checked" : "" ?> />
+                    <?= $product['name'] ?> - &euro; <?= number_format($product['price'], 2) ?>
+                </label>
+                <br />
+            <?php endforeach; ?>
+            <p class="red"><?= $validationErrors["products"] ?></p>
+
+        </fieldset>
 
         <!-- FORM -->
         <form method="post">
@@ -85,22 +101,6 @@
                     </div>
 
                 </div>
-
-            </fieldset>
-
-            <fieldset>
-
-                <legend>Products</legend>
-
-                <!-- PRODUCT SELECTION -->
-                <?php foreach ($products as $i => $product) : ?>
-                    <label>
-                        <input type="checkbox" value="1" name="products[<?= $i ?>]" <?= isset($_POST["products"][$i]) ? "checked" : "" ?> />
-                        <?= $product['name'] ?> - &euro; <?= number_format($product['price'], 2) ?>
-                    </label>
-                    <br />
-                <?php endforeach; ?>
-                <p class="red"><?= $validationErrors["products"] ?></p>
 
             </fieldset>
 
