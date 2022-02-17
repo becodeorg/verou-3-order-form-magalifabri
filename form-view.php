@@ -52,24 +52,24 @@
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="street">Street:</label>
-                        <input type="text" name="street" id="street" class="form-control" value="<?= $street ?>">
+                        <input type="text" name="street" id="street" class="form-control" value="<?= $street ?>" required>
                         <p class="red"><?= $validationErrors["street"] ?></p>
                     </div>
                     <div class="form-group col-md-6">
                         <label for="streetnumber">Street number:</label>
-                        <input type="text" id="streetnumber" name="streetnumber" class="form-control" value="<?= $streetnumber ?>">
+                        <input type="text" id="streetnumber" name="streetnumber" class="form-control" value="<?= $streetnumber ?>" required>
                         <p class="red"><?= $validationErrors["streetnumber"] ?></p>
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="city">City:</label>
-                        <input type="text" id="city" name="city" class="form-control" value="<?= $city ?>">
+                        <input type="text" id="city" name="city" class="form-control" value="<?= $city ?>" required>
                         <p class="red"><?= $validationErrors["city"] ?></p>
                     </div>
                     <div class="form-group col-md-6">
                         <label for="zipcode">Zipcode</label>
-                        <input type="text" id="zipcode" name="zipcode" class="form-control" value="<?= $zipcode ?>">
+                        <input type="text" id="zipcode" name="zipcode" class="form-control" value="<?= $zipcode ?>" required>
                         <p class="red"><?= $validationErrors["zipcode"] ?></p>
                     </div>
                 </div>
