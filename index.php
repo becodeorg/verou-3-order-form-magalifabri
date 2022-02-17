@@ -102,23 +102,63 @@ function reportErrors($invalidFields)
     }
 }
 
+function getOrderedList()
+{
+    global $products;
+    $orderedProductsStr = "";
+    $lastArrayElem = end($_POST["products"]);
+
+    foreach ($_POST["products"] as $key => $value) {
+        // echo $products[$key]["name"];
+        $orderedProductsStr .= "- " . $products[$key]["name"] . "<br>";
+    }
+    // echo $orderedProductsStr;
+    return $orderedProductsStr;
+
+
+    // for ($i = 0; $i < count($_POST["products"]); $i++) {
+    //     echo "test<br>";
+    //     echo $_POST["products"][0];
+    //     echo $products[$_POST["products"][0]];
+    //     // foreach ($_POST["products"] as $product) {
+    //     $orderedProductsStr += $_POST["products"][$i];
+    //     if ($_POST["products"][$i + 1] === $lastArrayElem) {
+    //         $orderedProductsStr += " and ";
+    //     } else {
+    //         $orderedProductsStr += ", ";
+    //     }
+    // }
+}
+
+function getAddress()
+{
+    return "${_POST['street']} ${_POST['streetnumber']}, ${_POST['city']}";
+}
+
+$orderConfirmationMsg = "";
+function reportSuccess()
+{
+    global $orderConfirmationMsg;
+
+    $orderConfirmationMsg = "Thank you for ordering! <br><br>"
+        . "Your order: <br>"
+        . getOrderedList()
+        . "<br> Delivery to " . getAddress() . " will follow shortly";
+}
+
 function handleForm()
 {
-    // TODO: form related tasks (step 1)
-
     // sanitizeData();
     // Validation (step 2)
     $invalidFields = validate();
     if (!empty($invalidFields)) {
-        // TODO: handle errors
         reportErrors($invalidFields);
     } else {
-        // TODO: handle successful submission
+        reportSuccess();
     }
 }
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    pre_r($_POST);
     handleForm();
 }
 

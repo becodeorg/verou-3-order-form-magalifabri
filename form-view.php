@@ -29,6 +29,13 @@
         </ul>
     </nav>
     */ ?>
+
+        <?php if ($orderConfirmationMsg) : ?>
+            <div class="alert alert-success" role="alert">
+                <?= $orderConfirmationMsg ?>
+            </div>
+        <?php endif ?>
+
         <form method="post">
             <div class="form-row">
                 <div class="form-group col-md-6">
