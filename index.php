@@ -1,17 +1,45 @@
 <?php
 
-// This file is your starting point (= since it's the index)
-// It will contain most of the logic, to prevent making a messy mix in the html
+// SETUP
 
-// This line makes PHP behave in a more strict way
 declare(strict_types=1);
 
 ini_set('display_errors', '1');
 ini_set('display_startup_errors', '1');
 error_reporting(E_ALL);
 
-// We are going to use session variables so we need to enable sessions
 session_start();
+
+
+// VARIABLES
+
+$email = $_POST["email"] ?? "";
+$street = $_POST["street"] ?? "";
+$streetnumber = $_POST["streetnumber"] ?? "";
+$city = $_POST["city"] ?? "";
+$zipcode = $_POST["zipcode"] ?? "";
+
+$products = [
+    ['name' => 'Your favourite drink', 'price' => 2.5],
+    ['name' => 'Your least-favourite drink', 'price' => 0.5],
+    ['name' => 'Mediocre drink', 'price' => 1.5],
+];
+
+$totalValue = 0;
+
+$validationErrors = [
+    "email" => "",
+    "street" => "",
+    "streetnumber" => "",
+    "city" => "",
+    "zipcode" => "",
+    "products" => "",
+];
+
+$orderConfirmationMsg = "";
+
+
+// DEV FUNCTIONS
 
 function pre_r(array $str)
 {
@@ -20,7 +48,6 @@ function pre_r(array $str)
     echo "</pre>";
 }
 
-// Use this function when you need to need an overview of these variables
 function whatIsHappening()
 {
     // echo '<h2>$_GET</h2>';
@@ -35,14 +62,46 @@ function whatIsHappening()
     // var_dump($_SESSION);
 }
 
-// TODO: provide some products (you may overwrite the example)
-$products = [
-    ['name' => 'Your favourite drink', 'price' => 2.5],
-    ['name' => 'Your least-favourite drink', 'price' => 0.5],
-    ['name' => 'Mediocre drink', 'price' => 1.5],
-];
 
-$totalValue = 0;
+// FUNCTIONS
+
+function getOrderList()
+{
+    global $products;
+    $orderedProductsStr = "";
+
+    foreach ($_POST["products"] as $key => $value) {
+        $orderedProductsStr .= "- " . $products[$key]["name"] . "<br>";
+    }
+
+    return $orderedProductsStr;
+}
+
+function getAddress()
+{
+    return "${_POST['street']} ${_POST['streetnumber']}, ${_POST['city']}";
+}
+
+function reportSuccess()
+{
+    global $orderConfirmationMsg;
+
+    $orderConfirmationMsg = "Thank you for ordering! <br><br>"
+        . "Your order: <br>"
+        . getOrderList()
+        . "<br> Delivery to " . getAddress() . " will follow shortly";
+}
+
+
+function reportErrors($invalidFields)
+{
+    global $validationErrors;
+
+    foreach ($invalidFields as $field) {
+        $validationErrors[$field[0]] = $field[1];
+    }
+}
+
 
 function validate()
 {
@@ -67,89 +126,12 @@ function validate()
         array_push($invalidFields, ["products", "min. 1 selection required"]);
     }
 
-    // pre_r($invalidFields);
-    // This function will send a list of invalid fields back
     return $invalidFields;
 }
 
-$validationErrors = [
-    "email" => "",
-    "street" => "",
-    "streetnumber" => "",
-    "city" => "",
-    "zipcode" => "",
-    "products" => "",
-];
-
-// function sanitizeData()
-// {
-//     // trim whitespace from strings in $_POST
-//     foreach ($_POST as &$data) {
-//         if (gettype($data) === "string") {
-//             $data = trim($data);
-//             $data = htmlspecialchars($data);
-//         }
-//     }
-//     unset($data);
-// }
-
-function reportErrors($invalidFields)
-{
-    global $validationErrors;
-
-    foreach ($invalidFields as $field) {
-        $validationErrors[$field[0]] = $field[1];
-    }
-}
-
-function getOrderedList()
-{
-    global $products;
-    $orderedProductsStr = "";
-    $lastArrayElem = end($_POST["products"]);
-
-    foreach ($_POST["products"] as $key => $value) {
-        // echo $products[$key]["name"];
-        $orderedProductsStr .= "- " . $products[$key]["name"] . "<br>";
-    }
-    // echo $orderedProductsStr;
-    return $orderedProductsStr;
-
-
-    // for ($i = 0; $i < count($_POST["products"]); $i++) {
-    //     echo "test<br>";
-    //     echo $_POST["products"][0];
-    //     echo $products[$_POST["products"][0]];
-    //     // foreach ($_POST["products"] as $product) {
-    //     $orderedProductsStr += $_POST["products"][$i];
-    //     if ($_POST["products"][$i + 1] === $lastArrayElem) {
-    //         $orderedProductsStr += " and ";
-    //     } else {
-    //         $orderedProductsStr += ", ";
-    //     }
-    // }
-}
-
-function getAddress()
-{
-    return "${_POST['street']} ${_POST['streetnumber']}, ${_POST['city']}";
-}
-
-$orderConfirmationMsg = "";
-function reportSuccess()
-{
-    global $orderConfirmationMsg;
-
-    $orderConfirmationMsg = "Thank you for ordering! <br><br>"
-        . "Your order: <br>"
-        . getOrderedList()
-        . "<br> Delivery to " . getAddress() . " will follow shortly";
-}
 
 function handleForm()
 {
-    // sanitizeData();
-    // Validation (step 2)
     $invalidFields = validate();
     if (!empty($invalidFields)) {
         reportErrors($invalidFields);
@@ -158,14 +140,10 @@ function handleForm()
     }
 }
 
+
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     handleForm();
 }
 
-$email = $_POST["email"] ?? "";
-$street = $_POST["street"] ?? "";
-$streetnumber = $_POST["streetnumber"] ?? "";
-$city = $_POST["city"] ?? "";
-$zipcode = $_POST["zipcode"] ?? "";
 
 require 'form-view.php';
