@@ -48,16 +48,26 @@ function validate()
 {
     $invalidFields = [];
 
-    // check for empty fields
     foreach ($_POST as $fieldKey => $fieldValue) {
-        if (empty($fieldValue)) {
-            array_push($invalidFields, $fieldKey);
+        if (empty($fieldValue)) { // check for empty fields
+            array_push($invalidFields, [$fieldKey, "field required"]);
+        } else if ($fieldKey === "zipcode") {
+            if (!is_numeric($fieldValue)) { // check if zipcode contains only* numbers
+                array_push($invalidFields, [$fieldKey, "invalid zipcode"]);
+            }
+        } else if ($fieldKey === "email") { // check if email is valid
+            if (!filter_var($fieldValue, FILTER_VALIDATE_EMAIL)) {
+                array_push($invalidFields, [$fieldKey, "invalid email"]);
+            }
         }
     }
-    if (empty($_POST["products"])) {
-        array_push($invalidFields, "products");
+
+    // check if min 1 product has been selected
+    if (!isset($_POST["products"])) {
+        array_push($invalidFields, ["products", "min. 1 selection required"]);
     }
 
+    // pre_r($invalidFields);
     // This function will send a list of invalid fields back
     return $invalidFields;
 }
@@ -88,10 +98,7 @@ function reportErrors($invalidFields)
     global $validationErrors;
 
     foreach ($invalidFields as $field) {
-        $validationErrors[$field] = "field required";
-        if ($field === "products") {
-            $validationErrors[$field] = "min. 1 selection required";
-        }
+        $validationErrors[$field[0]] = $field[1];
     }
 }
 
