@@ -34,24 +34,30 @@
             </div>
         <?php endif ?>
 
-        <fieldset>
-
-            <legend>Products</legend>
-
-            <!-- PRODUCT SELECTION -->
-            <?php foreach ($products as $i => $product) : ?>
-                <label>
-                    <input type="checkbox" value="1" name="products[<?= $i ?>]" <?= isset($_POST["products"][$i]) ? "checked" : "" ?> />
-                    <?= $product['name'] ?> - &euro; <?= number_format($product['price'], 2) ?>
-                </label>
-                <br />
-            <?php endforeach; ?>
-            <p class="red"><?= $validationErrors["products"] ?></p>
-
-        </fieldset>
 
         <!-- FORM -->
         <form method="post">
+
+            <fieldset>
+
+                <legend>Products</legend>
+
+                <!-- PRODUCT SELECTION -->
+                <?php foreach ($products as $i => $product) : ?>
+                    <label>
+                        <!-- <input type="text" maxlength="3" size="3" placeholder="#" name="products[<?= $i ?>]" />
+                        <?= $product['name'] ?> - &euro; <?= number_format($product['price'], 2) ?> -->
+                        <input type="checkbox" value="1" name="products[<?= $i ?>]" <?= isset($_POST["products"][$i]) ? "checked" : "" ?> />
+                        <?= $product['name'] ?> - &euro; <?= number_format($product['price'], 2) ?>
+                    </label>
+                    <br />
+                <?php endforeach; ?>
+                <p class="red"><?= $validationErrors["products"] ?></p>
+
+            </fieldset>
+
+            <!-- SUBMIT BUTTON -->
+            <button type="submit" class="btn btn-primary">Order!</button>
 
             <!-- EMAIL INPUT -->
             <div class="form-row">
