@@ -1,10 +1,12 @@
 // TODO: make order buttons gray while form is incomplete
+const productInputFields = document.querySelectorAll(".product");
 const emailInputField = document.querySelector("#email");
 const streetInputField = document.querySelector("#street");
 const streetNumberInputField = document.querySelector("#streetnumber");
 const cityInputField = document.querySelector("#city");
 const zipcodeInputField = document.querySelector("#zipcode");
 
+const productsErrorMsg = document.querySelector(".error-msg.products");
 const emailErrorMsg = document.querySelector(".error-msg.email");
 const streetErrorMsg = document.querySelector(".error-msg.street");
 const streetNumberErrorMsg = document.querySelector(".error-msg.streetnumber");
@@ -21,6 +23,26 @@ form.addEventListener("submit", event => {
     const cityInput = cityInputField.value;
     const zipcodeInput = zipcodeInputField.value;
     let errorEncountered = false;
+
+    zipcodeErrorMsg.textContent = "";
+    cityErrorMsg.textContent = "";
+    streetNumberErrorMsg.textContent = "";
+    streetErrorMsg.textContent = "";
+    emailErrorMsg.textContent = "";
+
+    let productOrdered = false;
+    for (const productInput of productInputFields) {
+        if (isNum(productInput.value)
+            && productInput.value > 0) {
+
+            productOrdered = true;
+        }
+    }
+
+    if (!productOrdered) {
+        productsErrorMsg.textContent = "min. 1 order required";
+        errorEncountered = true;
+    }
 
     if (!emailInput) {
         errorEncountered = true;
