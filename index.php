@@ -6,16 +6,29 @@
 // This line makes PHP behave in a more strict way
 declare(strict_types=1);
 
+ini_set('display_errors', '1');
+ini_set('display_startup_errors', '1');
+error_reporting(E_ALL);
+
 // We are going to use session variables so we need to enable sessions
 session_start();
+
+function pre_r($str)
+{
+    echo "<pre>";
+    var_dump($str);
+    echo "</pre>";
+}
 
 // Use this function when you need to need an overview of these variables
 function whatIsHappening()
 {
-    echo '<h2>$_GET</h2>';
-    var_dump($_GET);
+    // echo '<h2>$_GET</h2>';
+    // var_dump($_GET);
+    // pre_r($_GET);
     echo '<h2>$_POST</h2>';
-    var_dump($_POST);
+    // var_dump($_POST);
+    pre_r($_POST);
     // echo '<h2>$_COOKIE</h2>';
     // var_dump($_COOKIE);
     // echo '<h2>$_SESSION</h2>';
@@ -39,6 +52,7 @@ function validate()
 
 function handleForm()
 {
+    whatIsHappening();
     // TODO: form related tasks (step 1)
 
     // Validation (step 2)
@@ -51,9 +65,18 @@ function handleForm()
 }
 
 // TODO: replace this if by an actual check
-$formSubmitted = false;
-if ($formSubmitted) {
+// $formSubmitted = false;
+// if ($formSubmitted) {
+//     handleForm();
+// }
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
     handleForm();
 }
+
+$email = $_POST["email"] ?? "";
+$street = $_POST["street"] ?? "";
+$streetnumber = $_POST["streetnumber"] ?? "";
+$city = $_POST["city"] ?? "";
+$zipcode = $_POST["zipcode"] ?? "";
 
 require 'form-view.php';
