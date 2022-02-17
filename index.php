@@ -79,7 +79,9 @@ function getOrderList($products)
     $orderedProductsStr = "";
 
     foreach ($_POST["products"] as $key => $value) {
-        $orderedProductsStr .= "- " . $products[$key]["name"] . "<br>";
+        if ($value) {
+            $orderedProductsStr .= "- " . $value . " x " . $products[$key]["name"] . "<br>";
+        }
     }
 
     return $orderedProductsStr;
@@ -129,9 +131,14 @@ function validate()
         }
     }
 
-    // check if min 1 product has been selected
-    if (!isset($_POST["products"])) {
-        array_push($invalidFields, ["products", "min. 1 selection required"]);
+    // check if min 1 product has been ordered
+    foreach ($_POST["products"] as $index => $numberOrdered) {
+        if ($numberOrdered) {
+            break;
+        }
+        if ($index + 1 === count($_POST["products"])) {
+            array_push($invalidFields, ["products", "min. 1 selection required"]);
+        }
     }
 
     return $invalidFields;
@@ -154,5 +161,4 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     handleForm($products);
 }
 
-// pre_r($_GET);
 require 'form-view.php';

@@ -45,10 +45,8 @@
                 <!-- PRODUCT SELECTION -->
                 <?php foreach ($products as $i => $product) : ?>
                     <label>
-                        <!-- <input type="text" maxlength="3" size="3" placeholder="#" name="products[<?= $i ?>]" />
-                        <?= $product['name'] ?> - &euro; <?= number_format($product['price'], 2) ?> -->
-                        <input type="checkbox" value="1" name="products[<?= $i ?>]" <?= isset($_POST["products"][$i]) ? "checked" : "" ?> />
-                        <?= $product['name'] ?> - &euro; <?= number_format($product['price'], 2) ?>
+                        <input class="short-input" type="number" min="0" placeholder="#" name="products[<?= $i ?>]" value="<?= $_POST["products"][$i] ?? "" ?>" />
+                        x <?= $product['name'] ?> - &euro; <?= number_format($product['price'], 2) ?>
                     </label>
                     <br />
                 <?php endforeach; ?>
@@ -127,6 +125,10 @@
         .red {
             color: red;
             font-weight: bold;
+        }
+
+        .short-input {
+            width: 50px;
         }
     </style>
 
