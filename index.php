@@ -16,15 +16,17 @@ function whatIsHappening()
     var_dump($_GET);
     echo '<h2>$_POST</h2>';
     var_dump($_POST);
-    echo '<h2>$_COOKIE</h2>';
-    var_dump($_COOKIE);
-    echo '<h2>$_SESSION</h2>';
-    var_dump($_SESSION);
+    // echo '<h2>$_COOKIE</h2>';
+    // var_dump($_COOKIE);
+    // echo '<h2>$_SESSION</h2>';
+    // var_dump($_SESSION);
 }
 
 // TODO: provide some products (you may overwrite the example)
 $products = [
     ['name' => 'Your favourite drink', 'price' => 2.5],
+    ['name' => 'Your least-favourite drink', 'price' => 0.5],
+    ['name' => 'Mediocre drink', 'price' => 1.5],
 ];
 
 $totalValue = 0;
