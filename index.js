@@ -1,37 +1,53 @@
 // TODO: make order buttons gray while form is incomplete
-const productInputFields = document.querySelectorAll(".product");
-const emailInputField = document.querySelector("#email");
-const streetInputField = document.querySelector("#street");
-const streetNumberInputField = document.querySelector("#streetnumber");
-const cityInputField = document.querySelector("#city");
-const zipcodeInputField = document.querySelector("#zipcode");
 
-const productsErrorMsg = document.querySelector(".error-msg.products");
-const emailErrorMsg = document.querySelector(".error-msg.email");
-const streetErrorMsg = document.querySelector(".error-msg.street");
-const streetNumberErrorMsg = document.querySelector(".error-msg.streetnumber");
-const cityErrorMsg = document.querySelector(".error-msg.city");
-const zipcodeErrorMsg = document.querySelector(".error-msg.zipcode");
+// GLOBAL VARIABLES
+
+const inputs = {
+    products: document.querySelectorAll(".product"),
+    email: document.querySelector("#email"),
+    street: document.querySelector("#street"),
+    streetNumber: document.querySelector("#streetnumber"),
+    city: document.querySelector("#city"),
+    zipcode: document.querySelector("#zipcode"),
+}
+
+const errorPs = {
+    products: document.querySelector(".error-msg.products"),
+    email: document.querySelector(".error-msg.email"),
+    street: document.querySelector(".error-msg.street"),
+    streetNumber: document.querySelector(".error-msg.streetnumber"),
+    city: document.querySelector(".error-msg.city"),
+    zipcode: document.querySelector(".error-msg.zipcode"),
+}
+
+
+// FUNCTIONS
 
 const isNum = val => /^\d+$/.test(val);
 
-const form = document.querySelector("form");
-form.addEventListener("submit", event => {
-    const emailInput = emailInputField.value;
-    const streetInput = streetInputField.value;
-    const streetNumberInput = streetNumberInputField.value;
-    const cityInput = cityInputField.value;
-    const zipcodeInput = zipcodeInputField.value;
+
+const removeErrorMsgs = () => {
+    errorPs.products.textContent = "";
+    errorPs.email.textContent = "";
+    errorPs.street.textContent = "";
+    errorPs.streetNumber.textContent = "";
+    errorPs.city.textContent = "";
+    errorPs.zipcode.textContent = "";
+}
+
+
+const formValidation = (event) => {
+    const emailInput = inputs.email.value;
+    const streetInput = inputs.street.value;
+    const streetNumberInput = inputs.streetNumber.value;
+    const cityInput = inputs.city.value;
+    const zipcodeInput = inputs.zipcode.value;
     let errorEncountered = false;
 
-    zipcodeErrorMsg.textContent = "";
-    cityErrorMsg.textContent = "";
-    streetNumberErrorMsg.textContent = "";
-    streetErrorMsg.textContent = "";
-    emailErrorMsg.textContent = "";
+    removeErrorMsgs();
 
     let productOrdered = false;
-    for (const productInput of productInputFields) {
+    for (const productInput of inputs.products) {
         if (isNum(productInput.value)
             && productInput.value > 0) {
 
@@ -40,38 +56,43 @@ form.addEventListener("submit", event => {
     }
 
     if (!productOrdered) {
-        productsErrorMsg.textContent = "min. 1 order required";
+        errorPs.products.textContent = "min. 1 order required";
         errorEncountered = true;
     }
 
     if (!emailInput) {
         errorEncountered = true;
-        emailErrorMsg.textContent = "Field required";
+        errorPs.email.textContent = "Field required";
     }
     if (!streetInput) {
         errorEncountered = true;
-        streetErrorMsg.textContent = "Field required";
+        errorPs.street.textContent = "Field required";
     }
     if (!streetNumberInput) {
         errorEncountered = true;
-        streetNumberErrorMsg.textContent = "Field required";
+        errorPs.streetNumber.textContent = "Field required";
     }
     if (!cityInput) {
         errorEncountered = true;
-        cityErrorMsg.textContent = "Field required";
+        errorPs.city.textContent = "Field required";
     }
     if (!zipcodeInput) {
         errorEncountered = true;
-        zipcodeErrorMsg.textContent = "Field required";
+        errorPs.zipcode.textContent = "Field required";
     } else if (!isNum(zipcodeInput)
         || zipcodeInput < 0
         || zipcodeInput > 999999) {
 
         errorEncountered = true;
-        zipcodeErrorMsg.textContent = "Invalid input";
+        errorPs.zipcode.textContent = "Invalid input";
     }
 
     if (errorEncountered) {
         event.preventDefault();
     }
-})
+}
+
+
+// EVENT LISTENERS
+
+document.querySelector("form").addEventListener("submit", formValidation)
