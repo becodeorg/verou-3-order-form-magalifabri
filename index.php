@@ -63,6 +63,9 @@ function validate()
     if (empty($_POST["zipcode"])) {
         array_push($invalidFields, "zipcode");
     }
+    if (empty($_POST["products"])) {
+        array_push($invalidFields, "products");
+    }
 
     // This function will send a list of invalid fields back
     return $invalidFields;
@@ -74,6 +77,7 @@ $validationErrors = [
     "streetnumber" => "",
     "city" => "",
     "zipcode" => "",
+    "products" => "",
 ];
 
 function handleForm()
@@ -82,11 +86,15 @@ function handleForm()
 
     // Validation (step 2)
     $invalidFields = validate();
+    pre_r($invalidFields);
     global $validationErrors;
     if (!empty($invalidFields)) {
         // TODO: handle errors
         foreach ($invalidFields as $field) {
             $validationErrors[$field] = "field required";
+            if ($field === "products") {
+                $validationErrors[$field] = "min. 1 selection required";
+            }
         }
     } else {
         // TODO: handle successful submission
@@ -94,6 +102,7 @@ function handleForm()
 }
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    pre_r($_POST);
     handleForm();
 }
 

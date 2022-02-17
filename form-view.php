@@ -77,6 +77,7 @@
                     </label>
                     <br />
                 <?php endforeach; ?>
+                <p class="red"><?= $validationErrors["products"] ?></p>
             </fieldset>
 
             <button type="submit" class="btn btn-primary">Order!</button>
