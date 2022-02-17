@@ -45,7 +45,7 @@
                 <!-- PRODUCT SELECTION -->
                 <?php foreach ($products as $i => $product) : ?>
                     <label>
-                        <input class="short-input" type="number" min="0" placeholder="#" name="products[<?= $i ?>]" value="<?= $_POST["products"][$i] ?? "" ?>" />
+                        <input class="short-input" type="number" min="0" max="99" placeholder="#" name="products[<?= $i ?>]" value="<?= $_POST["products"][$i] ?? "" ?>" />
                         x <?= $product['name'] ?> - &euro; <?= number_format($product['price'], 2) ?>
                     </label>
                     <br />
