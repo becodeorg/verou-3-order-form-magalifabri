@@ -52,7 +52,7 @@
                         || $product["type"] === "drink"
                     ) : ?>
                         <label>
-                            <input class="product short-input" type="number" min="0" max="99" placeholder="0" name="products[<?= $i ?>]" />
+                            <input class="product short-input" type="number" min="0" max="99" placeholder="0" name="products[<?= $i ?>]" value="<?= $_POST["products"][$i] ?? "" ?>" />
                             x <?= $product['name'] ?> - &euro; <?= number_format($product['price'], 2) ?>
                         </label>
                         <br />
