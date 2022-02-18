@@ -109,9 +109,9 @@ function getAddress()
 function getDeliveryText()
 {
     if ($_POST["delivery"] === "normal") {
-        return "<br> Delivery to " . getAddress() . " within 2 hours";
+        return "<br> Delivery to " . getAddress() . " within <b>2 hours</b>";
     } else {
-        return "<br> Express delivery to " . getAddress() . " within 45 minutes";
+        return "<br> Express delivery to " . getAddress() . " within <b>45 minutes</b>";
     }
 }
 
@@ -149,9 +149,10 @@ function reportSuccess($products, $totalOrderCost)
 {
     global $orderConfirmationMsg;
 
-    $orderConfirmationMsg = "Thank you for ordering! <br><br>"
-        . "Your order: <br>"
-        . getOrderList($products) . "<br>"
+    $orderConfirmationMsg = "Thanks for your order! <br><br>"
+        . "Order overview: <br>"
+        . getOrderList($products)
+        // . "<hr>"
         . "Total: €" . $totalOrderCost . "<br>"
         . getDeliveryText();
 }
