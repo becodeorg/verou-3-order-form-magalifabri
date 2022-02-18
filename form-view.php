@@ -42,20 +42,32 @@
         <!-- FORM -->
         <form method="post">
 
+            <!-- PRODUCT SELECTION -->
             <fieldset>
-
                 <legend>Products</legend>
-
-                <!-- PRODUCT SELECTION -->
                 <?php foreach ($products as $i => $product) : ?>
                     <label>
-                        <input class="product short-input" type="number" min="0" max="99" placeholder="#" name="products[<?= $i ?>]" value="<?= $_POST["products"][$i] ?? "" ?>" />
+                        <input class="product short-input" type="number" min="0" max="99" placeholder="0" name="products[<?= $i ?>]" value="<?= $_POST["products"][$i] ?? "" ?>" />
                         x <?= $product['name'] ?> - &euro; <?= number_format($product['price'], 2) ?>
                     </label>
                     <br />
                 <?php endforeach; ?>
                 <p class="error-msg products"><?= $validationErrors["products"] ?></p>
+            </fieldset>
 
+            <!-- DELIVERY INPUT -->
+            <fieldset>
+                <legend>Delivery</legend>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <input type="radio" name="delivery" id="normal" value="normal" checked>
+                        <label for="normal">normal (free)</label><br>
+                        <input type="radio" name="delivery" id="express" value="express">
+                        <label for="normal">express (€5.00)</label>
+                        <!-- <input type="email" id="email" name="email" class="form-control" value="<?= $_POST["email"] ?? "" ?>" required> -->
+                        <p class="error-msg delivery"><?= $validationErrors["delivery"] ?></p>
+                    </div>
+                </div>
             </fieldset>
 
             <!-- SUBMIT BUTTON -->
@@ -68,7 +80,6 @@
                     <input type="email" id="email" name="email" class="form-control" value="<?= $_POST["email"] ?? "" ?>" required>
                     <p class="error-msg email"><?= $validationErrors["email"] ?></p>
                 </div>
-                <div></div>
             </div>
 
             <fieldset>
