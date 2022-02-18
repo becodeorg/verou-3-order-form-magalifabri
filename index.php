@@ -93,6 +93,15 @@ function getAddress()
     return "${_POST['street']} ${_POST['streetnumber']}, ${_POST['city']}";
 }
 
+function getDeliveryText()
+{
+    if ($_POST["delivery"] === "normal") {
+        return "<br> Delivery to " . getAddress() . " within 2 hours";
+    } else {
+        return "<br> Express delivery to " . getAddress() . " within 45 minutes";
+    }
+}
+
 function reportSuccess($products)
 {
     global $orderConfirmationMsg;
@@ -100,7 +109,7 @@ function reportSuccess($products)
     $orderConfirmationMsg = "Thank you for ordering! <br><br>"
         . "Your order: <br>"
         . getOrderList($products)
-        . "<br> Delivery to " . getAddress() . " will follow shortly";
+        . getDeliveryText();
 }
 
 
