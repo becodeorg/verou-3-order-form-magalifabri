@@ -66,11 +66,10 @@
                 <legend>Delivery</legend>
                 <div class="form-row">
                     <div class="form-group col-md-6">
-                        <input type="radio" name="delivery" id="normal" value="normal" checked>
+                        <input type="radio" name="delivery" id="normal" value="normal" <?= (isset($_POST["delivery"]) && ($_POST["delivery"] === "normal") ? "checked" : "") ?>>
                         <label for="normal">normal (free)</label><br>
-                        <input type="radio" name="delivery" id="express" value="express">
-                        <label for="normal">express (€5.00)</label>
-                        <!-- <input type="email" id="email" name="email" class="form-control" value="<?= $_POST["email"] ?? "" ?>" required> -->
+                        <input type="radio" name="delivery" id="express" value="express" <?= (isset($_POST["delivery"]) && ($_POST["delivery"] === "express") ? "checked" : "") ?>>
+                        <label for="express">express (€5.00)</label>
                         <p class="error-msg delivery"><?= $validationErrors["delivery"] ?></p>
                     </div>
                 </div>
