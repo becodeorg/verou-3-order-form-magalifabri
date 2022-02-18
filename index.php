@@ -26,7 +26,7 @@ if ($_GET["food"] === "1") {
     ];
 }
 
-$totalValue = 0;
+$totalValue = $_COOKIE["totalValue"] ?? 0;
 
 $validationErrors = [
     "email" => "",
@@ -119,14 +119,14 @@ function getOrderList($products)
     return $orderedProductsStr;
 }
 
-function reportSuccess($products)
+function reportSuccess($products, $totalOrderCost)
 {
     global $orderConfirmationMsg;
 
     $orderConfirmationMsg = "Thank you for ordering! <br><br>"
         . "Your order: <br>"
         . getOrderList($products) . "<br>"
-        . "Total: €" . getTotalCost($products) . "<br>"
+        . "Total: €" . $totalOrderCost . "<br>"
         . getDeliveryText();
 }
 
@@ -187,21 +187,28 @@ function validate()
 }
 
 
-function handleForm($products)
+function handleForm(array $products): float
 {
     $invalidFields = validate();
     if (!empty($invalidFields)) {
         reportErrors($invalidFields);
+        return 0;
     } else {
-        reportSuccess($products);
+        $totalOrderCost = getTotalCost($products);
+        reportSuccess($products, $totalOrderCost);
         setSessionsVars();
+        return $totalOrderCost;
     }
 }
 
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    // pre_r($_POST);
-    handleForm($products);
+    $totalOrderCost = handleForm($products);
+
+    if ($totalOrderCost) { // 0 means validation failed
+        $totalValue += $totalOrderCost;
+        setcookie("totalValue", "$totalValue", time() + 60 * 60 * 24 * 30);
+    }
 }
 
 require 'form-view.php';
