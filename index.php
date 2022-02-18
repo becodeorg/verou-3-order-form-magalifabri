@@ -75,19 +75,6 @@ function setSessionsVars()
 }
 
 
-function getOrderList($products)
-{
-    $orderedProductsStr = "";
-
-    foreach ($_POST["products"] as $key => $value) {
-        if ($value) {
-            $orderedProductsStr .= "- " . $value . " x " . $products[$key]["name"] . "<br>";
-        }
-    }
-
-    return $orderedProductsStr;
-}
-
 function getAddress()
 {
     return "${_POST['street']} ${_POST['streetnumber']}, ${_POST['city']}";
@@ -102,13 +89,44 @@ function getDeliveryText()
     }
 }
 
+function getTotalCost($products)
+{
+    $total = 0;
+
+    foreach ($_POST["products"] as $key => $value) {
+        if ($value) {
+            $total += $value *  $products[$key]["price"];
+        }
+    }
+
+    if ($_POST["delivery"] === "express") {
+        $total += 5;
+    }
+
+    return $total;
+}
+
+function getOrderList($products)
+{
+    $orderedProductsStr = "";
+
+    foreach ($_POST["products"] as $key => $value) {
+        if ($value) {
+            $orderedProductsStr .= "- " . $value . " x " . $products[$key]["name"] . "<br>";
+        }
+    }
+
+    return $orderedProductsStr;
+}
+
 function reportSuccess($products)
 {
     global $orderConfirmationMsg;
 
     $orderConfirmationMsg = "Thank you for ordering! <br><br>"
         . "Your order: <br>"
-        . getOrderList($products)
+        . getOrderList($products) . "<br>"
+        . "Total: €" . getTotalCost($products) . "<br>"
         . getDeliveryText();
 }
 
