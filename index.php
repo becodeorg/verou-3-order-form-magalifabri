@@ -12,37 +12,39 @@ session_start();
 
 
 // VARIABLES
+
 $products = [
     [
         'name' => 'Your favourite drink',
-        'price' => 2.5
+        'price' => 2.5,
+        'type' => 'drink',
     ],
     [
         'name' => 'Your least-favourite drink',
-        'price' => 0.5
+        'price' => 0.5,
+        'type' => 'drink',
     ],
     [
         'name' => 'Mediocre drink',
-        'price' => 1.5
+        'price' => 1.5,
+        'type' => 'drink',
+    ],
+    [
+        'name' => 'Your favourite food',
+        'price' => 4.5,
+        'type' => 'food',
+    ],
+    [
+        'name' => 'Your least-favourite food',
+        'price' => 2.5,
+        'type' => 'food',
+    ],
+    [
+        'name' => 'Mediocre food',
+        'price' => 3.5,
+        'type' => 'food',
     ],
 ];
-
-if ($_GET["food"] === "1") {
-    $products = [
-        [
-            'name' => 'Your favourite food',
-            'price' => 4.5
-        ],
-        [
-            'name' => 'Your least-favourite food',
-            'price' => 2.5
-        ],
-        [
-            'name' => 'Mediocre food',
-            'price' => 3.5
-        ],
-    ];
-}
 
 $totalValue = $_COOKIE["totalValue"] ?? 0;
 

@@ -46,11 +46,17 @@
             <fieldset>
                 <legend>Products</legend>
                 <?php foreach ($products as $i => $product) : ?>
-                    <label>
-                        <input class="product short-input" type="number" min="0" max="99" placeholder="0" name="products[<?= $i ?>]" />
-                        x <?= $product['name'] ?> - &euro; <?= number_format($product['price'], 2) ?>
-                    </label>
-                    <br />
+                    <?php
+                    if (
+                        ($_GET["food"] === "1" && $product["type"] === "food")
+                        || ($_GET["food"] === "0" && $product["type"] === "drink")
+                    ) : ?>
+                        <label>
+                            <input class="product short-input" type="number" min="0" max="99" placeholder="0" name="products[<?= $i ?>]" />
+                            x <?= $product['name'] ?> - &euro; <?= number_format($product['price'], 2) ?>
+                        </label>
+                        <br />
+                    <?php endif ?>
                 <?php endforeach; ?>
                 <p class="error-msg products"><?= $validationErrors["products"] ?></p>
             </fieldset>
