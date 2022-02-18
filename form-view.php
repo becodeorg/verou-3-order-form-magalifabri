@@ -48,8 +48,8 @@
                 <?php foreach ($products as $i => $product) : ?>
                     <?php
                     if (
-                        ($_GET["food"] === "1" && $product["type"] === "food")
-                        || ($_GET["food"] === "0" && $product["type"] === "drink")
+                        (isset($_GET["food"]) && $_GET["food"] === "1" && $product["type"] === "food")
+                        || $product["type"] === "drink"
                     ) : ?>
                         <label>
                             <input class="product short-input" type="number" min="0" max="99" placeholder="0" name="products[<?= $i ?>]" />
