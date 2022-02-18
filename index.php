@@ -35,6 +35,7 @@ $validationErrors = [
     "city" => "",
     "zipcode" => "",
     "products" => "",
+    "delivery" => "",
 ];
 
 $orderConfirmationMsg = "";
@@ -132,6 +133,11 @@ function validate()
         }
     }
 
+    // check delivery option selection
+    if (empty($_POST["delivery"])) {
+        array_push($invalidFields, ["delivery", "select a delivery option"]);
+    }
+
     // check product selection
     foreach ($_POST["products"] as $index => $numberOrdered) {
         if ($numberOrdered) {
@@ -167,6 +173,7 @@ function handleForm($products)
 
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    // pre_r($_POST);
     handleForm($products);
 }
 
