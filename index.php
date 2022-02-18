@@ -13,20 +13,40 @@ session_start();
 
 // VARIABLES
 $products = [
-    ['name' => 'Your favourite drink', 'price' => 2.5],
-    ['name' => 'Your least-favourite drink', 'price' => 0.5],
-    ['name' => 'Mediocre drink', 'price' => 1.5],
+    [
+        'name' => 'Your favourite drink',
+        'price' => 2.5
+    ],
+    [
+        'name' => 'Your least-favourite drink',
+        'price' => 0.5
+    ],
+    [
+        'name' => 'Mediocre drink',
+        'price' => 1.5
+    ],
 ];
 
 if ($_GET["food"] === "1") {
     $products = [
-        ['name' => 'Your favourite food', 'price' => 4.5],
-        ['name' => 'Your least-favourite food', 'price' => 2.5],
-        ['name' => 'Mediocre food', 'price' => 3.5],
+        [
+            'name' => 'Your favourite food',
+            'price' => 4.5
+        ],
+        [
+            'name' => 'Your least-favourite food',
+            'price' => 2.5
+        ],
+        [
+            'name' => 'Mediocre food',
+            'price' => 3.5
+        ],
     ];
 }
 
 $totalValue = $_COOKIE["totalValue"] ?? 0;
+
+$orderHistoryUl = createOrderHistoryUl($products);
 
 $validationErrors = [
     "email" => "",
@@ -53,18 +73,53 @@ function pre_r(array $str)
 function whatIsHappening()
 {
     // echo '<h2>$_GET</h2>';
-    // var_dump($_GET);
     // pre_r($_GET);
     // echo '<h2>$_POST</h2>';
     // pre_r($_POST);
     // echo '<h2>$_COOKIE</h2>';
-    // var_dump($_COOKIE);
+    // pre_r($_COOKIE);
     echo '<h2>$_SESSION</h2>';
     pre_r($_SESSION);
 }
 
 
 // FUNCTIONS
+
+function createOrderHistoryUl($products)
+{
+    $orderHistoryUl = "<ul>";
+
+    foreach ($products as $index => $productArray) {
+        $productNameAsCookieKey = str_replace(" ", "-", $productArray["name"]);
+        if (!empty($_COOKIE[$productNameAsCookieKey])) {
+            $orderHistoryUl .= "<li>" . $productArray["name"] . " x " . $_COOKIE[$productNameAsCookieKey] . "</li>";
+        }
+    }
+
+    $orderHistoryUl .= "</ul>";
+
+    return $orderHistoryUl;
+}
+
+
+function storeOrderInfo($products, $totalValue)
+{
+    setcookie("totalValue", "$totalValue", time() + 60 * 60 * 24 * 30);
+
+    foreach ($_POST["products"] as $index => $numberOrdered) {
+        if ($numberOrdered) {
+            $productName = str_replace(" ", "-", $products[$index]["name"]);
+            if (!empty($_COOKIE[$productName])) {
+                $currentNumOrdered = $_COOKIE[$productName];
+                $newNumOrdered = $currentNumOrdered + $numberOrdered;
+                setcookie($productName, "$newNumOrdered", time() + 60 * 60 * 24 * 30);
+            } else {
+                setcookie($productName, "$numberOrdered", time() + 60 * 60 * 24 * 30);
+            }
+        }
+    }
+}
+
 
 function setSessionsVars()
 {
@@ -207,7 +262,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     if ($totalOrderCost) { // 0 means validation failed
         $totalValue += $totalOrderCost;
-        setcookie("totalValue", "$totalValue", time() + 60 * 60 * 24 * 30);
+        storeOrderInfo($products, $totalValue);
+        $orderHistoryUl = createOrderHistoryUl($products);
     }
 }
 

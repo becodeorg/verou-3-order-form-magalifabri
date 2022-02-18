@@ -47,7 +47,7 @@
                 <legend>Products</legend>
                 <?php foreach ($products as $i => $product) : ?>
                     <label>
-                        <input class="product short-input" type="number" min="0" max="99" placeholder="0" name="products[<?= $i ?>]" value="<?= $_POST["products"][$i] ?? "" ?>" />
+                        <input class="product short-input" type="number" min="0" max="99" placeholder="0" name="products[<?= $i ?>]" />
                         x <?= $product['name'] ?> - &euro; <?= number_format($product['price'], 2) ?>
                     </label>
                     <br />
@@ -72,6 +72,9 @@
 
             <!-- SUBMIT BUTTON -->
             <button type="submit" class="btn btn-primary">Order!</button>
+
+            <br>
+            <br>
 
             <!-- EMAIL INPUT -->
             <div class="form-row">
@@ -125,18 +128,21 @@
 
             <!-- SUBMIT BUTTON -->
             <button type="submit" class="btn btn-primary">Order!</button>
-
+            <br>
+            <br>
         </form>
 
-        <footer>You already ordered <strong>&euro; <?php echo $totalValue ?></strong> in food and drinks.</footer>
+        <footer>
+            <legend>Order History</legend>
+
+            <p>You already ordered <strong>&euro; <?= $totalValue ?></strong> in food and drinks.</p>
+
+            <?= $orderHistoryUl ?>
+        </footer>
 
     </div>
 
     <style>
-        footer {
-            text-align: center;
-        }
-
         .error-msg {
             color: red;
             font-weight: bold;
