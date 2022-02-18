@@ -232,10 +232,13 @@ function handleForm(array $products): float
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $totalOrderCost = handleForm($products);
 
-    if ($totalOrderCost) { // 0 means validation failed
+    // $totalOrderCost of 0 means validation failed
+    if ($totalOrderCost) {
         $totalValue += $totalOrderCost;
         storeOrderInfo($products, $totalValue);
         $orderHistoryUl = createOrderHistoryUl($products);
+        // wipe products element so they aren't refilled on the form's products input
+        $_POST["products"] = NULL;
     }
 }
 
