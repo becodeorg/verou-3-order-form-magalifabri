@@ -143,6 +143,15 @@
             <p>You already ordered <strong>&euro; <?= $totalValue ?></strong> in food and drinks.</p>
 
             <?= $orderHistoryUl ?>
+
+            <hr>
+            <div class="text-center">
+                <p>Made by Magali Fabri</p>
+                <p>View code on <a href="https://github.com/becodeorg/verou-3-order-form-magalifabri">GitHub</a></p>
+                <p>Powered by <a href="https://getbootstrap.com/">Bootstrap</a></p>
+                <p>Deployed with <a href="https://www.heroku.com/home">Heroku</a></p>
+            </div>
+
         </footer>
 
     </div>
@@ -155,6 +164,10 @@
 
         .short-input {
             width: 50px;
+        }
+
+        .text-center {
+            text-align: center;
         }
     </style>
 
